@@ -3,119 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Manager</title>
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #e74c3c;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 1rem;
-            background: #f5f6fa;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .nav-button {
-            width: 100%;
-            padding: 1.2rem;
-            font-size: 1.1rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .form-field {
-            margin: 1rem 0;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            margin-top: 0.5rem;
-        }
-    </style>
+    <title>We Technician Data By Ziad</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Main Menu -->
-    <div id="mainMenu">
-        <button class="card nav-button" onclick="showScreen('search')">Search</button>
-        <button class="card nav-button" onclick="showScreen('add')">Add</button>
-        <button class="card nav-button" onclick="showScreen('problems')">Problems</button>
-        <button class="card nav-button" onclick="showScreen('repair')">Repair Wire</button>
-        <button class="card nav-button" onclick="showScreen('backup')">Backup & Restore</button>
-    </div>
+  <div class="background-blur"></div>
 
-    <!-- Search Screen -->
-    <div id="searchScreen" class="screen">
-        <div class="card">
-            <input type="number" id="searchLineNumber" placeholder="Line Number">
-            <button onclick="searchEntry()">Search</button>
-            <!-- Display results here -->
+
+    <div class="app-container">
+        <!-- Main Menu Screen -->
+        <section id="main-menu" class="screen active">
+            <div class="header">
+                <h1>We Technician Data By Ziad</h1>
+                <button id="theme-toggle" class="theme-toggle">
+                  <i class="fas fa-moon"></i>
+              </button>
+            </div>
+            <div class="button-grid">
+                <button class="main-button" onclick="showScreen('search-screen')">
+                    <i class="fas fa-search"></i>
+                    <span>Search</span>
+                </button>
+                <button class="main-button" onclick="showScreen('add-screen')">
+                    <i class="fas fa-plus"></i>
+                    <span>Add</span>
+                </button>
+                <button class="main-button" onclick="showScreen('problems-menu')">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Problems</span>
+                </button>
+                <button class="main-button" onclick="showScreen('repair-screen')">
+                    <i class="fas fa-tools"></i>
+                    <span>Repair Wire</span>
+                </button>
+                <button class="main-button" onclick="showScreen('review-menu')">
+                  <i class="fas fa-star"></i>
+                  <span>Review</span>
+              </button>
+              <button class="main-button" onclick="showScreen('port-calculator-screen')">
+                <i class="fas fa-calculator"></i>
+                <span>Port Calculator</span>
+            </button>
+            </div>
+            
+        </section>
+
+        <!-- Search Screen -->
+        <section id="search-screen" class="screen">
+            <div class="header">
+                <button class="back-button" onclick="showScreen('main-menu')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1>Search Line</h1>
+                <button id="edit-button" class="edit-button" onclick="toggleEditMode()">
+                    <i class="fas fa-pen"></i>
+                </button>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Enter Line Number">
+                <button class="search-button" onclick="searchLine()">Search</button>
+            </div>
+            <div id="search-results" class="results-container">
+                <div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <p>Enter a line number to search</p>
+                </div>
+            </div>
+            <div id="edit-form" class="edit-form hidden">
+                <form id="line-edit-form">
+                    <div class="form-group">
+                        <label for="edit-line-number">Line Number</label>
+                        <input type="text" id="edit-line-number" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-port">Port</label>
+                        <input type="text" id="edit-port">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-cabinet">Cabinet</label>
+                        <input type="text" id="edit-cabinet">
+                    </div>
+                    <div class="form-group">
+                      <label for="edit-test">Test</label>
+                      <input type="text" id="edit-test">
+                     </div>
+                    <div class="form-group">
+                        <label for="edit-box">Box</label>
+                        <input type="text" id="edit-box">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-terminal">Terminal</label>
+                        <input type="text" id="edit-terminal">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-phone">Phone Number</label>
+                        <input type="text" id="edit-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-second-phone">Second Phone Number</label>
+                        <input type="text" id="edit-second-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-address">Address</label>
+                        <input type="text" id="edit-address">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-date">Installation Date</label>
+                        <input type="date" id="edit-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-length">Length</label>
+                        <input type="text" id="edit-length">
+                    </div>
+                    <button type="button" class="save-button" onclick="saveEditedLine()">Save Changes</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Add Line Screen -->
+        <section id="add-screen" class="screen">
+            <div class="header">
+                <button class="back-button" onclick="showScreen('main-menu')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1>Add New Line</h1>
+            </div>
+            <form id="add-line-form" class="add-form">
+                <div class="form-group">
+                    <label for="add-line-number">Line Number</label>
+                    <input type="text" id="add-line-number" required>
+                </div>
+                <div class="form-group">
+                    <label for="add-port">Port</label>
+                    <input type="text" id="add-port">
+                </div>
+                <div class="form-group">
+                    <label for="add-cabinet">Cabinet</label>
+                    <input type="text" id="add-cabinet">
+                </div>
+                <div class="form-group">
+                  <label for="add-test">Test</label>
+                  <input type="text" id="add-test">
+                </div>
+                <div class="form-group">
+                    <label for="add-box">Box</label>
+                    <input type="text" id="add-box">
+                </div>
+                <div class="form-group">
+                    <label for="add-terminal">Terminal</label>
+                    <input type="text" id="add-terminal">
+                </div>
+                <div class="form-group">
+                    <label for="add-phone">Phone Number</label>
+                    <input type="text" id="add-phone">
+                </div>
+                <div class="form-group">
+                    <label for="add-second-phone">Second Phone Number</label>
+                    <input type="text" id="add-second-phone">
+                </div>
+                <div class="form-group">
+                    <label for="add-address">Address</label>
+                    <input type="text" id="add-address">
+                </div>
+                <div class="form-group">
+                    <label for="add-date">Installation Date</label>
+                    <input type="date" id="add-date">
+                </div>
+                <div class="form-group">
+                    <label for="add-length">Length</label>
+                    <input type="text" id="add-length">
+                </div>
+                <button type="button" class="save-button" onclick="addNewLine()">Save Line</button>
+            </form>
+        </section>
+
+        <!-- Problems Menu Screen -->
+        <section id="problems-menu" class="screen">
+            <div class="header">
+                <button class="back-button" onclick="showScreen('main-menu')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1>Problems</h1>
+            </div>
+            <div class="button-grid">
+                <button class="secondary-button" onclick="showScreen('problems-search')">
+                    <i class="fas fa-search"></i>
+                    <span>Search Problem</span>
+                </button>
+                <button class="secondary-button" onclick="showScreen('problems-add')">
+                    <i class="fas fa-plus"></i>
+                    <span>Add Problem</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Problems Search Screen -->
+        <section id="problems-search" class="screen">
+            <div class="header">
+                <button class="back-button" onclick="showScreen('problems-menu')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1>Search Problem</h1>
+                <button class="edit-button" onclick="toggleProblemEditMode()">
+                    <i class="fas fa-pen"></i>
+                </button>
+            </div>
+            <div class="search-container">
+                <input type="text" id="problem-search-input" placeholder="Enter Line Number">
+                <button class="search-button" onclick="searchProblem()">Search</button>
+            </div>
+            <div id="problem-search-results" class="results-container">
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Enter a line number to search for problems</p>
+                </div>
+            </div>
+            <div id="problem-edit-form" class="edit-form hidden">
+                <!-- Problem edit form will be dynamically populated -->
+            </div>
+        </section>
+
+        <!-- Add Problem Screen -->
+        <section id="problems-add" class="screen">
+            <div class="header">
+                <button class="back-button" onclick="showScreen('problems-menu')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1>Add Problem</h1>
+            </div>
+            <form id="add-problem-form" class="add-form">
+                <div class="form-group">
+                    <label for="problem-line-number">Line Number</label>
+                    <input type="text" id="problem-line-number" required>
+                </div>
+                <div class="form-group">
+                    <label for="problem-type">Type</label>
+                    <select id="problem-type" required>
+                        <option value="Voice">Voice</option>
+                        <option value="Voice&Data">Voice & Data</option>
+                        <option value="DataOnly">Data Only</option>
+                        <option value="BLQ">BLQ</option>
+                        <option value="Unstable">Unstable</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="last-fixes">Last Fixes On The Line</label>
+                    <textarea id="last-fixes"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="special-problems">Special Problems</label>
+                    <textarea id="special-problems"></textarea>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="underground-cables">
+                    <label for="underground-cables">Underground Cables</label>
+                </div>
+                
+                <div class="data-section">
+                    <h3>Line Data</h3>
+                    <div id="problem-line-data" class="line-data">
+                        <p>Search for a line to display data</p>
+                    </div>
+                </div>
+                
+                <button type="button" class="save-button" onclick="addProblem()">Save Problem</button>
+            </form>
+            <section id="problems-menu" class="screen">
+              <div class="header">
+                  <button class="back-button" onclick="goBack()">
+                      <i class="fas fa-arrow-left"></i>
+                  </button>
+                  <h1>Problems</h1>
+              </div>
+              <div class="button-grid">
+                  <button class="secondary-button" onclick="showScreen('problems-search')">
+                      <i class="fas fa-search"></i>
+                      <span>Search Problem</span>
+                  </button>
+                  <button class="secondary-button" onclick="showScreen('problems-add')">
+                      <i class="fas fa-plus"></i>
+                      <span>Add Problem</span>
+                  </button>
+              </div>
+              
+              <!-- This div will be populated by loadActiveProblems() -->
+              <div class="problems-list">
+                  <h3>Active Problems</h3>
+                  <div class="empty-state">
+                      <i class="fas fa-spinner fa-spin"></i>
+                      <p>Loading active problems...</p>
+                  </div>
+              </div>
+          </section>
+          
+          <!-- This part shows how the "Finished" checkbox should be added to your problems-add screen -->
+          <!-- Find the underground cables checkbox in your problems-add form and add this after it: -->
+          <div class="form-group checkbox-group">
+              <input type="checkbox" id="problem-finished">
+              <label for="problem-finished">Finished</label>
+          </div>
+        </section>
+
+        <!-- Repair Wire Screen -->
+        <section id="repair-screen" class="screen">
+          <div class="header">
+              <button class="back-button" onclick="showScreen('main-menu')">
+                  <i class="fas fa-arrow-left"></i>
+              </button>
+              <h1>Repair Wire</h1>
+          </div>
+          <div class="search-container">
+              <input type="text" id="repair-search-input" placeholder="Search for repaired line">
+              <button class="search-button" onclick="searchRepair()">Search</button>
+          </div>
+          <form id="repair-form" class="add-form">
+              <div class="form-group">
+                  <label for="repair-line-number">Line Number</label>
+                  <input type="text" id="repair-line-number" required>
+              </div>
+              <div class="form-group">
+                  <label for="repair-phone">Phone Number</label>
+                  <input type="text" id="repair-phone">
+              </div>
+              <div class="form-group">
+                  <label for="repair-length">Length</label>
+                  <input type="text" id="repair-length">
+              </div>
+              <div class="form-group checkbox-group">
+                  <input type="checkbox" id="repair-done">
+                  <label for="repair-done">Done</label>
+              </div>
+              <div class="form-group">
+                  <label for="repair-date">Date</label>
+                  <input type="date" id="repair-date" value="">
+              </div>
+              <button type="button" class="save-button" onclick="addRepair()">Save Repair</button>
+          </form>
+          
+          <div class="repair-actions">
+              <button type="button" class="show-pending-button" onclick="showPendingRepairs()">
+                  <i class="fas fa-clipboard-list"></i>
+                  <span>Show Pending Repairs</span>
+              </button>
+          </div>
+          
+          <div class="repair-list">
+              <h3>Active Repairs</h3>
+              <div id="active-repairs" class="results-container">
+                  <div class="empty-state">
+                      <i class="fas fa-tools"></i>
+                      <p>No active repairs</p>
+                  </div>
+              </div>
+          </div>
+      </section>
+        <section id="review-menu" class="screen">
+          <div class="header">
+              <button class="back-button" onclick="showScreen('main-menu')">
+                  <i class="fas fa-arrow-left"></i>
+              </button>
+              <h1>Reviews</h1>
+          </div>
+          <div class="button-grid">
+              <button class="secondary-button" onclick="showScreen('review-search')">
+                  <i class="fas fa-search"></i>
+                  <span>Search Review</span>
+              </button>
+              <button class="secondary-button" onclick="showScreen('review-add')">
+                  <i class="fas fa-plus"></i>
+                  <span>Add Review</span>
+              </button>
+          </div>
+          <div class="reviews-list">
+            <h3>Active Reviews</h3>
+            <div id="active-reviews" class="results-container">
+                <div class="empty-state">
+                    <i class="fas fa-star"></i>
+                    <p>No active reviews</p>
+                </div>
+            </div>
         </div>
+      </section>
+      
+      <!-- Review Search Screen -->
+      <section id="review-search" class="screen">
+          <div class="header">
+              <button class="back-button" onclick="showScreen('review-menu')">
+                  <i class="fas fa-arrow-left"></i>
+              </button>
+              <h1>Search Review</h1>
+              <button class="edit-button" onclick="toggleReviewEditMode()">
+                  <i class="fas fa-pen"></i>
+              </button>
+          </div>
+          <div class="search-container">
+              <input type="text" id="review-search-input" placeholder="Enter Phone Number">
+              <button class="search-button" onclick="searchReview()">Search</button>
+          </div>
+          <div id="review-search-results" class="results-container">
+              <div class="empty-state">
+                  <i class="fas fa-star"></i>
+                  <p>Enter a phone number to search for reviews</p>
+              </div>
+          </div>
+          <div id="review-edit-form" class="edit-form hidden">
+              <!-- Review edit form will be dynamically populated -->
+          </div>
+      </section>
+      
+      <!-- Add Review Screen -->
+      <section id="review-add" class="screen">
+          <div class="header">
+              <button class="back-button" onclick="showScreen('review-menu')">
+                  <i class="fas fa-arrow-left"></i>
+              </button>
+              <h1>Add Review</h1>
+          </div>
+          <form id="add-review-form" class="add-form">
+              <div class="form-group">
+                  <label for="review-phone-number">Phone Number</label>
+                  <input type="text" id="review-phone-number" required>
+              </div>
+              <div class="form-group">
+                  <label for="review-name">Name</label>
+                  <input type="text" id="review-name">
+              </div>
+              <div class="form-group">
+                  <label for="review-box">Box</label>
+                  <input type="text" id="review-box">
+              </div>
+              <div class="form-group">
+                  <label for="review-cabinet">Cabinet</label>
+                  <input type="text" id="review-cabinet">
+              </div>
+              <div class="form-group">
+                  <label for="review-status">Status</label>
+                  <select id="review-status" onchange="toggleReasonField()">
+                      <option value="Possible">Possible</option>
+                      <option value="NotPossible">Not Possible</option>
+                  </select>
+              </div>
+              <div class="form-group" id="reason-field" style="display: none;">
+                  <label for="review-reason">Reason</label>
+                  <textarea id="review-reason"></textarea>
+              </div>
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="review-finished">
+                <label for="review-finished">Finished</label>
+            </div>
+              <button type="button" class="save-button" onclick="addReview()">Save Review</button>
+          </form>
+      </section>
+      <!-- Port Calculator Screen -->
+<section id="port-calculator-screen" class="screen">
+  <div class="header">
+      <button class="back-button" onclick="showScreen('main-menu')">
+          <i class="fas fa-arrow-left"></i>
+      </button>
+      <h1>Port Calculator</h1>
+  </div>
+  <div class="calculator-container">
+      <div class="form-group">
+          <label for="port-number-input">Port Number (1-1024)</label>
+          <input type="number" id="port-number-input" min="1" max="1024" placeholder="Enter port number">
+      </div>
+      <button class="save-button" onclick="calculatePort()">Calculate</button>
+      
+      <div id="port-result" class="results-container" style="margin-top: 30px;">
+          <div class="empty-state">
+              <i class="fas fa-calculator"></i>
+              <p>Enter a port number to calculate position</p>
+          </div>
+      </div>
+  </div>
+</section>
     </div>
-
-    <!-- Database Setup -->
-    <script>
-        let db;
-        const DB_NAME = 'lineData';
-        const DB_VERSION = 1;
-
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-
-        request.onupgradeneeded = (event) => {
-            db = event.target.result;
-            
-            // Main data store
-            const mainStore = db.createObjectStore('lines', { keyPath: 'lineNumber' });
-            
-            // Problems store
-            const problemsStore = db.createObjectStore('problems', { keyPath: 'lineNumber' });
-            
-            // Repair store
-            const repairStore = db.createObjectStore('repairs', { keyPath: 'lineNumber' });
-        };
-
-        request.onsuccess = (event) => {
-            db = event.target.result;
-        };
-
-        // Screen navigation
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.style.display = 'none';
-            });
-            document.getElementById(`${screenId}Screen`).style.display = 'block';
-        }
-
-        // Search function
-        async function searchEntry() {
-            const lineNumber = document.getElementById('searchLineNumber').value;
-            const transaction = db.transaction(['lines'], 'readonly');
-            const store = transaction.objectStore('lines');
-            const request = store.get(parseInt(lineNumber));
-
-            request.onsuccess = (event) => {
-                const data = event.target.result;
-                // Display data in UI
-            };
-        }
-
-        // Add similar functions for other operations
-    </script>
+    <button class="back-button" onclick="showScreen('specific-screen')">
+    <!-- Firebase SDKs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-firestore-compat.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
